@@ -31,6 +31,15 @@ class LoginView(TemplateView):
 		context.update(data)
 		return context
 
+class ProfileView(TemplateView):
+	template_name = 'profile.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ProfileView, self).get_context_data(**kwargs)
+
+		if self.request.user.is_authenticated():
+			context.update({'userprofile': })
+
 def signup(request):
 	form = UserCreationEmailForm(request.POST or None)
 
