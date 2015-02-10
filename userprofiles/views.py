@@ -9,6 +9,7 @@ class LoginView(View):
 	
 	def get(self, request, *args, **kwargs):
 		return HttpResponse('LoginView!!')
+		
 
 
 def signup(request):
