@@ -4,3 +4,4 @@
 *.pyc
 content/
 media/
+static/

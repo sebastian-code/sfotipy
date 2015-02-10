@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+from tracks.models import Track
 
 class UserProfile(models.Model):
 	avatar = models.ImageField(upload_to='avatars')
@@ -8,7 +11,6 @@ class UserProfile(models.Model):
 		return self.user.username
 
 class UserTrack(models.Model):
-	"""count"""
 	count = models.PositiveIntegerField(default=0)
 	user = models.ForeignKey(User)
 	track = models.ForeignKey(Track)
