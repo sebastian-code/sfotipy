@@ -9,7 +9,6 @@ from rest_framework import routers, serializers
 from artists.views import ArtistViewSet
 from albums.views import AlbumViewSet
 from tracks.views import TrackViewSet
-from userprofiles.views import LoginView
 
 router = routers.DefaultRouter()
 router.register(r'artists', ArtistViewSet)
@@ -34,8 +33,7 @@ urlpatterns = patterns('',
  	url(r'^albums/detail/(?P<artist_id>[\w\-]+)/$', AlbumDetailView.as_view()), 
  	url(r'^api/', include(router.urls)),
  	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
- 	url(r'^login/', LoginView.as_view(), name='login'),
- 	#url(r'^userprofiles/', include('userprofiles.urls')),
+ 	url(r'^', include('userprofiles.urls')),
 )
 
 urlpatterns += patterns('',
