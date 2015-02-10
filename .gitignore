@@ -1,0 +1,6 @@
+*.sqlite3
+*.jpg
+*.png
+*.pyc
+content/
+media/
