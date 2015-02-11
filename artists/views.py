@@ -28,7 +28,6 @@ class ArtistDetailView(DetailView):
 
 	def get_template_names(self):
 		return 'artists.html'
-	
 
 class ArtistListView(ListView):
 	model = Artist
@@ -39,6 +38,7 @@ class AlbumListView(JsonResponseMixin, ListView):
 	model = Album
 	context_object_name = 'albums'
 	template_name = 'albums.html'
+	paginate_by = 2
 
 	def get(self, request, *args, **kwargs):
 		self.object_list = self.get_queryset()
@@ -86,3 +86,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class =  ArtistSerializer
     paginate_by = 1
+
+class AlbumDetailView(DetailView):
+	model = Album
+	template_name = 'album_detail.html'
