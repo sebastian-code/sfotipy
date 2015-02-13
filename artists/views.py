@@ -90,3 +90,26 @@ class ArtistViewSet(viewsets.ModelViewSet):
 class AlbumDetailView(DetailView):
 	model = Album
 	template_name = 'album_detail.html'
+
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object()
+
+		format = self.request.GET.get('format', None)
+		if format = 'json':
+			return self.json_to_response()
+
+		context = self.get_context_data(object=self.object)
+		return self.render_to_response(context)
+
+	def json_to_response(self):
+		data = {
+			'album':{
+				'cover': self.object.cover.url,
+				'title': self.object.title,
+				'slug': self.object.slug,
+				'artist': self.object.artist.nickname,
+				'tracks': [t.title for t in self.objecto.track_set.all()]
+			}
+		}
+		
+		return JsonResponse(data, safe=False)
