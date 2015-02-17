@@ -5,17 +5,18 @@ from django.views.generic import TemplateView, RedirectView, FormView
 from django.shortcuts import render
 from .forms import UserCreationEmailForm, EmailAuthenticationForm, LoginForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 
 class LoginView(FormView):
-	form_class = LoginForm
+	form_class = AuthenticationForm
 	template_name = 'login.html'
 	success_url = '/profile/'
 	
 	def form_valid(self, form):
-		username = form.cleaned_data['username']
-		password = form.cleaned_data['password']
-		user = authenticate(username=username, password=password)
-		login(self.request, user)
+		# username = form.cleaned_data['username']
+		# password = form.cleaned_data['password']
+		# user = authenticate(username=username, password=password)
+		login(self.request, form.user_cache)
 
 		return super(LoginView, self).form_valid(form)
 
