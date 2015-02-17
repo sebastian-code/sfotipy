@@ -9,6 +9,8 @@ from django.views.generic import ListView
 from albums.models import Album
 from artists.models import Artist
 
+from userprofiles.mixins import LoginRequiredMixin
+
 class JsonResponseMixin(object):
 	def response_handler(self):
 		format = self.request.GET.get('format', None)
@@ -23,18 +25,18 @@ class JsonResponseMixin(object):
 		data = self.get_data()
 		return JsonResponse(data, safe=False)
 		
-class ArtistDetailView(DetailView):
+class ArtistDetailView(LoginRequiredMixin, DetailView):
 	model = Artist
 
 	def get_template_names(self):
 		return 'artists.html'
 
-class ArtistListView(ListView):
+class ArtistListView(LoginRequiredMixin, ListView):
 	model = Artist
 	context_object_name = 'artists'
 	template_name = 'artists.html'
 
-class AlbumListView(JsonResponseMixin, ListView):
+class AlbumListView(LoginRequiredMixin, JsonResponseMixin, ListView):
 	model = Album
 	context_object_name = 'albums'
 	template_name = 'albums.html'
@@ -87,7 +89,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class =  ArtistSerializer
     paginate_by = 1
 
-class AlbumDetailView(DetailView):
+class AlbumDetailView(LoginRequiredMixin,  DetailView):
 	model = Album
 	template_name = 'album_detail.html'
 
@@ -113,3 +115,6 @@ class AlbumDetailView(DetailView):
 		}
 		
 		return JsonResponse(data, safe=False)
+
+class TopTrackListView():
+	pass

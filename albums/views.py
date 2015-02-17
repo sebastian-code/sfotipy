@@ -9,7 +9,9 @@ from django.views.generic import ListView, DetailView
 
 from rest_framework import routers, serializers, viewsets
 
-class AlbumDetailView(JsonResponseMixin, DetailView):
+from userprofiles.mixins import LoginRequiredMixin
+
+class AlbumDetailView(LoginRequiredMixin, JsonResponseMixin, DetailView):
 	model = Album
 	template_name = 'album_detail.html'
 	slug_url_kwarg = 'artist_id'

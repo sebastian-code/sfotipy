@@ -6,6 +6,12 @@ from django.shortcuts import render
 from .forms import UserCreationEmailForm, EmailAuthenticationForm, LoginForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from userprofiles.mixins import LoginRequiredMixin
+
+# Se comentan las siguientes importaciones por no requerirse 
+# al se reemplazas por el mixin del app
+# from django.contrib.auth.decorators import login_required
+# from django.utils.decorators import method_decorator
 
 class LoginView(FormView):
 	form_class = AuthenticationForm
@@ -57,8 +63,13 @@ class LoginView(FormView):
 # 		context.update(data)
 # 		return context
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
 	template_name = 'profile.html'
+
+	#Se comenta para incorporarse en el mixin
+	# @method_decorator(login_required(login_url='/login/'))
+	# def dispatch(self, request, *args, **kwargs):
+	#     return super(ProfileView, self).dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileView, self).get_context_data(**kwargs)
