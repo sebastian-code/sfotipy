@@ -17,7 +17,7 @@ class LoginView(FormView):
 		user = authenticate(username=username, password=password)
 		login(self.request, user)
 
-		return super(LoginView, self.form_valid(form))
+		return super(LoginView, self).form_valid(form)
 
 	def get_context_data(self, **kwargs):
 		context = super(LoginView, self).get_context_data(**kwargs)
