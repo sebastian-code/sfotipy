@@ -95,7 +95,7 @@ class AlbumDetailView(DetailView):
 		self.object = self.get_object()
 
 		format = self.request.GET.get('format', None)
-		if format = 'json':
+		if format == 'json':
 			return self.json_to_response()
 
 		context = self.get_context_data(object=self.object)

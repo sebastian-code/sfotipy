@@ -1,18 +1,23 @@
 #from django.views.generic import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView, FormView
 #from django.http import HttpResponse
 
 from django.shortcuts import render
-from .forms import UserCreationEmailForm, EmailAuthenticationForm
-from django.contrib.auth import login
+from .forms import UserCreationEmailForm, EmailAuthenticationForm, LoginForm
+from django.contrib.auth import login, authenticate
 
-# class LoginView(View):
-	
-# 	def get(self, request, *args, **kwargs):
-# 		return HttpResponse('LoginView!!')
-
-class LoginView(TemplateView):
+class LoginView(FormView):
+	form_class = LoginForm
 	template_name = 'login.html'
+	success_url = '/profile/'
+	
+	def form_valid(self, form):
+		username = form.cleaned_data['username']
+		password = form.cleaned_data['password']
+		user = authenticate(username=username, password=password)
+		login(self.request, user)
+
+		return super(LoginView, self.form_valid(form))
 
 	def get_context_data(self, **kwargs):
 		context = super(LoginView, self).get_context_data(**kwargs)
@@ -30,6 +35,26 @@ class LoginView(TemplateView):
 
 		context.update(data)
 		return context
+
+# class LoginView(TemplateView):
+# 	template_name = 'login.html'
+
+# 	def get_context_data(self, **kwargs):
+# 		context = super(LoginView, self).get_context_data(**kwargs)
+# 		is_auth = False
+# 		name = None
+
+# 		if self.request.user.is_authenticated():
+# 			is_auth = True
+# 			name = self.request.user.username
+
+# 		data = {
+# 			'is_auth': is_auth,
+# 			'name': name,
+# 		}
+
+# 		context.update(data)
+# 		return context
 
 class ProfileView(TemplateView):
 	template_name = 'profile.html'
