@@ -5,7 +5,7 @@ from tracks.models import Track
 from actions import export_as_excel
 
 # Register your models here.
-
+@admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
 	list_display 	= ('artist', 'title','order', 'album', 'player', 'es_pharrel')
 	list_filter  	= ('artist', 'album')
@@ -19,4 +19,4 @@ class TrackAdmin(admin.ModelAdmin):
 
 	es_pharrel.boolean = True
 
-admin.site.register(Track, TrackAdmin)
+#admin.site.register(Track, TrackAdmin)

@@ -116,5 +116,6 @@ class AlbumDetailView(LoginRequiredMixin,  DetailView):
 		
 		return JsonResponse(data, safe=False)
 
-class TopTrackListView():
-	pass
+# class TopTrackListView(ListView):
+# 	queryset = Tracks.objects.all()
+# 	template_name = 'track_list.html'
